@@ -42,7 +42,7 @@ export async function sendContact(payload) {
     message
   };
   
-  const res = await fetch(`${API}/public/contact`, {
+  const res = await fetch(`${API}/companies/contact`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(contactData),
