@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Personal Website API
+
+Parameters:
+  NodeEnv:
+    Type: String
+    Default: production
+    Description: Environment
+  MongoDBUri:
+    Type: String
+    Default: ""
+    Description: MongoDB connection string
+  JwtSecret:
+    Type: String
+    Default: ""
+    Description: JWT secret key
+  AllowedOrigins:
+    Type: String
+    Default: "*"
+    Description: CORS allowed origins
+
+Resources:
+  PersonalWebsiteApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: personalWebsiteApi
+      CodeUri: server/
+      Handler: src/index.handler
+      Runtime: nodejs20.x
+      Timeout: 15
+      MemorySize: 512
+      Environment:
+        Variables:
+          NODE_ENV: !Ref NodeEnv
+          MONGODB_URI: !Ref MongoDBUri
+          JWT_SECRET: !Ref JwtSecret
+          ALLOWED_ORIGINS: !Ref AllowedOrigins
+      Events:
+        ApiGateway:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+        ApiGatewayRoot:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+
+Outputs:
+  PersonalWebsiteApi:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  PersonalWebsiteApiFunction:
+    Description: "Personal Website Lambda Function ARN"
+    Value: !GetAtt PersonalWebsiteApi.Arn
