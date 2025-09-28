@@ -24,6 +24,7 @@ root.render(
           <Route path="login" element={<Login />} />
           <Route path="pricing" element={<Pricing />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="contact/" element={<Navigate to="/contact" replace />} />
           <Route path="services" element={<Services />} />
           <Route path="portfolio" element={<Portfolio />} />
           <Route path="certifications" element={<Certifications />} />

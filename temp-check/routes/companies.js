@@ -8,11 +8,11 @@ const { Contact } = require('../models/company.js');
 const router = express.Router();
 
 // Initialize Gmail SMTP transporter
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransporter({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER || 'ccr1036user@gmail.com',
-    pass: process.env.EMAIL_PASS || 'yded ccde zkry rzxg'
+    user: process.env.GMAIL_USER || 'ccr1036user@gmail.com',
+    pass: process.env.GMAIL_APP_PASSWORD || process.env.GMAIL_PASSWORD
   }
 });
 
@@ -20,8 +20,8 @@ const transporter = nodemailer.createTransport({
 async function sendEmailNotification(contactData) {
   try {
     const mailOptions = {
-      from: 'ccr1036user@gmail.com',
-      to: 'ccr1036user@gmail.com',
+      from: process.env.GMAIL_USER || 'ccr1036user@gmail.com',
+      to: process.env.NOTIFICATION_EMAIL || 'ccr1036user@gmail.com',
       subject: `New Contact Form: ${contactData.subject}`,
       html: `
         <html>
@@ -51,18 +51,11 @@ Submitted at: ${new Date().toLocaleString()}
       `
     };
 
-    console.log('Attempting to send email notification...', { to: mailOptions.to, subject: mailOptions.subject });
     const result = await transporter.sendMail(mailOptions);
     console.log('Email sent successfully:', result.messageId);
     return result;
   } catch (error) {
-    console.error('Failed to send email notification:', error);
-    console.error('Error details:', {
-      code: error.code,
-      response: error.response,
-      responseCode: error.responseCode,
-      command: error.command
-    });
+    console.error('Failed to send email:', error);
     throw error;
   }
 }
@@ -71,7 +64,7 @@ Submitted at: ${new Date().toLocaleString()}
 async function sendAutoReply(contactData) {
   try {
     const mailOptions = {
-      from: 'ccr1036user@gmail.com',
+      from: process.env.GMAIL_USER || 'ccr1036user@gmail.com',
       to: contactData.email,
       subject: `Thank you for your message - We'll be in touch soon!`,
       html: `
@@ -161,18 +154,11 @@ This is an automated response. Please do not reply to this email.
       `
     };
 
-    console.log('Attempting to send auto-reply...', { to: mailOptions.to, subject: mailOptions.subject });
     const result = await transporter.sendMail(mailOptions);
     console.log('Auto-reply sent successfully:', result.messageId);
     return result;
   } catch (error) {
     console.error('Failed to send auto-reply:', error);
-    console.error('Auto-reply error details:', {
-      code: error.code,
-      response: error.response,
-      responseCode: error.responseCode,
-      command: error.command
-    });
     throw error;
   }
 }
@@ -193,42 +179,6 @@ router.get('/', requireAuth, requireRole('admin'), async (req, res) => {
     })));
   } catch (e) {
     res.status(500).json({ error: e.message });
-  }
-});
-
-// Test email endpoint (for debugging)
-router.post('/test-email', async (req, res) => {
-  try {
-    console.log('Testing email configuration...');
-    
-    // Test the transporter connection
-    await transporter.verify();
-    console.log('SMTP connection verified successfully');
-    
-    // Send a test email
-    const testMailOptions = {
-      from: 'ccr1036user@gmail.com',
-      to: 'ccr1036user@gmail.com',
-      subject: 'Test Email from Lambda Function',
-      text: 'This is a test email to verify SMTP configuration.',
-      html: '<p>This is a test email to verify SMTP configuration.</p>'
-    };
-    
-    const result = await transporter.sendMail(testMailOptions);
-    console.log('Test email sent successfully:', result.messageId);
-    
-    res.json({ 
-      success: true, 
-      message: 'Test email sent successfully',
-      messageId: result.messageId 
-    });
-  } catch (error) {
-    console.error('Test email failed:', error);
-    res.status(500).json({ 
-      error: 'Test email failed', 
-      details: error.message,
-      code: error.code 
-    });
   }
 });
 
@@ -259,37 +209,26 @@ router.post('/contact', async (req, res) => {
     }
 
     // Send email notification to admin
-    let emailSent = false;
     try {
       await sendEmailNotification(contactData);
       console.log('Email notification sent successfully');
-      emailSent = true;
     } catch (emailError) {
       console.error('Email notification failed:', emailError);
       // Don't fail the request if email fails, just log it
     }
 
-    // Send auto-reply to customer (optional - don't block response)
-    // Use Promise.race with timeout to prevent hanging
+    // Send auto-reply to customer
     try {
-      const autoReplyPromise = sendAutoReply(contactData);
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Auto-reply timeout')), 5000)
-      );
-      
-      await Promise.race([autoReplyPromise, timeoutPromise]);
+      await sendAutoReply(contactData);
       console.log('Auto-reply sent successfully');
     } catch (autoReplyError) {
-      console.error('Auto-reply failed or timed out:', autoReplyError);
+      console.error('Auto-reply failed:', autoReplyError);
       // Don't fail the request if auto-reply fails, just log it
     }
     
-    // Always send success response
-    console.log('Sending success response to client');
     res.status(201).json({ 
       success: true, 
-      message: 'Thank you for your message! I will get back to you soon.',
-      emailSent: emailSent
+      message: 'Thank you for your message! I will get back to you soon.' 
     });
   } catch (e) {
     console.error('Contact form error:', e);

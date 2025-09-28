@@ -38,27 +38,51 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(helmet());
 }
 
-// CORS: In production, restrict to ALLOWED_ORIGINS (comma-separated). In dev, allow all.
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
-  .split(',')
-  .map((s) => s.trim())
-  .filter(Boolean);
+// CORS: Allow specific origins including Amplify app
+const allowedOrigins = [
+  'https://amplify-deploy.da4pdofhs4ph2.amplifyapp.com',
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:4000'
+];
 
 app.use(
   cors({
     origin: (origin, cb) => {
-      // Allow all origins for now to fix CORS issues
-      // In production, you can restrict this to specific domains
-      return cb(null, true);
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return cb(null, true);
+      
+      // Check if origin is in allowed list
+      if (allowedOrigins.includes(origin)) {
+        return cb(null, true);
+      }
+      
+      // For development, allow all origins
+      if (process.env.NODE_ENV !== 'production') {
+        return cb(null, true);
+      }
+      
+      // In production, only allow specific origins
+      return cb(new Error('Not allowed by CORS'));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    optionsSuccessStatus: 200 // Some legacy browsers choke on 204
   })
 );
 
 app.use(express.json({ limit: '1mb' }));
 app.use(morgan('dev'));
+
+// Handle preflight requests explicitly
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, Origin, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
 
 // Friendly root route to avoid 404s at /
 app.get('/', (req, res) => {
