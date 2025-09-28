@@ -1,12 +1,18 @@
-import express from 'express';
-import { requireAuth, requireRole } from '../middleware/auth.js';
-import { User } from '../models/user.js';
+const express = require('express');
+const mongoose = require('mongoose');
+const { requireAuth, requireRole } = require('../middleware/auth.js');
+const { User } = require('../models/user.js');
+const { Contact } = require('../models/company.js');
 
 const router = express.Router();
 
 // Admin: list all users
 router.get('/', requireAuth, requireRole('admin'), async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.json({ message: 'Database not available', users: [] });
+    }
+    
     const users = await User.find({}).sort({ createdAt: -1 }).lean();
     res.json(users.map((u) => ({
       id: String(u._id),
@@ -57,6 +63,10 @@ router.post('/', requireAuth, requireRole('admin'), async (req, res) => {
   }
 
   try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database not available' });
+    }
+
     const bcrypt = (await import('bcryptjs')).default;
     const hash = await bcrypt.hash(password, 10);
     
@@ -87,6 +97,10 @@ router.patch('/:id', requireAuth, requireRole('admin'), async (req, res) => {
   const { email, role, enabled } = req.body;
   
   try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database not available' });
+    }
+
     const update = {};
     if (email !== undefined) update.email = email;
     if (role !== undefined) update.role = role;
@@ -106,4 +120,4 @@ router.patch('/:id', requireAuth, requireRole('admin'), async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

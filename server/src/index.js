@@ -1,17 +1,18 @@
-import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import serverless from 'serverless-http';
-import { connectDB, closeDB } from './lib/db.js';
-import authRoutes from './routes/auth.js';
-import companyRoutes from './routes/companies.js';
-import statusRoutes from './routes/status.js';
-import publicRoutes from './routes/public.js';
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const serverless = require('serverless-http');
+const { connectDB, closeDB } = require('./lib/db.js');
+const authRoutes = require('./routes/auth.js');
+const companyRoutes = require('./routes/companies.js');
+const statusRoutes = require('./routes/status.js');
+const publicRoutes = require('./routes/public.js');
 
 const app = express();
 app.set('trust proxy', 1);
+
 // Helmet: relaxed CSP in development; strict defaults in production
 if (process.env.NODE_ENV !== 'production') {
   app.use(helmet({
@@ -36,6 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   app.use(helmet());
 }
+
 // CORS: In production, restrict to ALLOWED_ORIGINS (comma-separated). In dev, allow all.
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
@@ -53,12 +55,13 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json({ limit: '1mb' }));
 app.use(morgan('dev'));
 
 // Friendly root route to avoid 404s at /
 app.get('/', (req, res) => {
-  res.type('text').send('VPN Manager API is running. Try GET /api/health');
+  res.type('text').send('Personal Website API is running. Try GET /api/health');
 });
 
 app.get('/api/health', async (req, res) => {
@@ -90,10 +93,12 @@ function ensureDB() {
 }
 
 // Export a Lambda handler for AWS API Gateway via serverless-http
-export const handler = serverless(async (req, res, next) => {
+const handler = serverless(async (req, res, next) => {
   await ensureDB();
   return app(req, res, next);
 });
+
+module.exports = { handler };
 
 // Local/dev server start (non-Lambda): only start when executed directly
 async function start() {
@@ -128,8 +133,8 @@ async function start() {
   return server;
 }
 
-// Detect if this file is run directly (node src/index.js) in ESM
-const isDirectRun = import.meta.url === `file://${process.argv[1]}`;
+// Detect if this file is run directly (node src/index.js) in CommonJS
+const isDirectRun = require.main === module;
 const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
 if (isDirectRun && !isLambda) {
   start().catch((e) => {
@@ -144,7 +149,6 @@ app.use((req, res, next) => {
 });
 
 // Centralized error handler
-// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
   const status = err.status || 500;

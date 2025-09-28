@@ -1,8 +1,7 @@
 
 {
-  "name": "vpn-mgr-server",
-  "version": "0.1.0",
-  "type": "module",
+  "name": "personal-website-api",
+  "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
     "dev": "node src/index.js",

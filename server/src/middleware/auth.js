@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
-export function requireAuth(req, res, next) {
+function requireAuth(req, res, next) {
   const auth = req.headers.authorization || '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
   if (!token) return res.status(401).json({ error: 'Unauthorized' });
@@ -13,7 +13,7 @@ export function requireAuth(req, res, next) {
   }
 }
 
-export function requireRole(role) {
+function requireRole(role) {
   return (req, res, next) => {
     if (!req.user || req.user.role !== role) {
       return res.status(403).json({ error: 'Forbidden' });
@@ -21,3 +21,5 @@ export function requireRole(role) {
     next();
   };
 }
+
+module.exports = { requireAuth, requireRole };

@@ -1,20 +1,14 @@
-const API = `${(import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '')}/public`;
+const API = `${(import.meta.env.VITE_API_URL || 'https://cycxagu4nx62zdw2bpexc56xh40iliuw.lambda-url.us-east-1.on.aws/api').replace(/\/$/, '')}`;
 const CONTACT_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || '';
 
 export async function getPlans() {
-  const res = await fetch(`${API}/plans`);
-  if (!res.ok) throw new Error('Failed to load plans');
-  return res.json();
+  // Plans functionality removed for personal website
+  return { plans: [] };
 }
 
 export async function createCheckout(payload) {
-  const res = await fetch(`${API}/checkout`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload || {}),
-  });
-  if (!res.ok) throw new Error((await res.json()).error || 'Checkout failed');
-  return res.json();
+  // Checkout functionality removed for personal website
+  throw new Error('Checkout not available');
 }
 
 export async function sendContact(payload) {
@@ -38,12 +32,26 @@ export async function sendContact(payload) {
       throw new Error(txt || 'Failed to send message');
     }
   }
-  // Default: use our backend route
-  const res = await fetch(`${API}/contact`, {
+  
+  // Use our Lambda backend route
+  const { name, phone, email, message } = payload || {};
+  const contactData = {
+    name,
+    email,
+    subject: phone ? `Contact from ${name} (${phone})` : `Contact from ${name}`,
+    message
+  };
+  
+  const res = await fetch(`${API}/public/contact`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload || {}),
+    body: JSON.stringify(contactData),
   });
-  if (!res.ok) throw new Error((await res.json()).error || 'Failed to send message');
+  
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || 'Failed to send message');
+  }
+  
   return res.json();
 }

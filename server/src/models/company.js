@@ -1,14 +1,40 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-const CompanySchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    contactEmail: { type: String },
-    plan: { type: String },
-    enabled: { type: Boolean, default: true, required: true },
-    expiresAt: { type: Date },
+const ContactSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
   },
-  { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } }
-);
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true
+  },
+  subject: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  message: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  status: {
+    type: String,
+    enum: ['new', 'read', 'replied'],
+    default: 'new'
+  },
+  ip: {
+    type: String,
+    default: null
+  }
+}, {
+  timestamps: true
+});
 
-export const Company = mongoose.model('Company', CompanySchema);
+const Contact = mongoose.model('Contact', ContactSchema);
+
+module.exports = { Contact };

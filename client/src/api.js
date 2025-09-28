@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL || '/api';
+const API = import.meta.env.VITE_API_URL || 'https://cycxagu4nx62zdw2bpexc56xh40iliuw.lambda-url.us-east-1.on.aws/api';
 
 function handleUnauthorized(res) {
   if (res && res.status === 401) {
@@ -45,7 +45,7 @@ export function authHeaders() {
 export async function listCompanies() {
   const res = await fetch(`${API}/companies`, { headers: authHeaders() });
   if (handleUnauthorized(res)) throw new Error('Unauthorized');
-  return parseOrThrow(res, 'Failed to list companies');
+  return parseOrThrow(res, 'Failed to list users');
 }
 
 export async function createCompany(payload) {
@@ -55,43 +55,22 @@ export async function createCompany(payload) {
     body: JSON.stringify(payload),
   });
   if (handleUnauthorized(res)) throw new Error('Unauthorized');
-  return parseOrThrow(res, 'Failed to create company');
+  return parseOrThrow(res, 'Failed to create user');
 }
 
 export async function updateCompanyStatus(id, payload) {
-  const res = await fetch(`${API}/companies/${id}/status`, {
+  const res = await fetch(`${API}/companies/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(payload),
   });
   if (handleUnauthorized(res)) throw new Error('Unauthorized');
-  return parseOrThrow(res, 'Failed to update company');
+  return parseOrThrow(res, 'Failed to update user');
 }
 
-export async function downloadConfig(companyId) {
-  const res = await fetch(`${API}/companies/${companyId}/config`, { headers: authHeaders() });
+// Contact form submissions (admin only)
+export async function listContacts() {
+  const res = await fetch(`${API}/companies/contacts`, { headers: authHeaders() });
   if (handleUnauthorized(res)) throw new Error('Unauthorized');
-  if (!res.ok) throw new Error('Failed to download config');
-  const blob = await res.blob();
-  return blob;
-}
-
-export async function listClients() {
-  const res = await fetch(`${API}/status/clients`, { headers: authHeaders() });
-  if (handleUnauthorized(res)) throw new Error('Unauthorized');
-  return parseOrThrow(res, 'Failed to list clients');
-}
-
-export async function downloadOneClickWindows(companyId) {
-  const res = await fetch(`${API}/companies/${companyId}/oneclick/windows`, { headers: authHeaders() });
-  if (handleUnauthorized(res)) throw new Error('Unauthorized');
-  if (!res.ok) throw new Error((await res.json()).error || 'Failed to get Windows one-click');
-  return await res.blob();
-}
-
-export async function downloadOneClickIOS(companyId) {
-  const res = await fetch(`${API}/companies/${companyId}/oneclick/ios`, { headers: authHeaders() });
-  if (handleUnauthorized(res)) throw new Error('Unauthorized');
-  if (!res.ok) throw new Error((await res.json()).error || 'Failed to get iOS one-click');
-  return await res.blob();
+  return parseOrThrow(res, 'Failed to list contacts');
 }
