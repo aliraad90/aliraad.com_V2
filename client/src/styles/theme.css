@@ -1,0 +1,183 @@
+/* Global theme with personal brand palette */
+:root {
+  /* Brand palette: Dark Blue + Olive/Green + Gray/Black */
+  --brand-navy-900: #0B1F3A; /* dark blue (trust) */
+  --brand-olive-500: #7BA13A; /* olive/green (energy & growth) */
+  --brand-green-600: #689231; /* darker shade for hover */
+  --brand-gray-50: #F5F7FA; /* light */
+  --brand-gray-900: #1A1D21; /* dark neutral */
+
+  /* App colors (mapped to brand) */
+  --color-primary: var(--brand-olive-500);
+  --color-primary-600: var(--brand-green-600);
+  --color-primary-700: #587e2a;
+  --color-bg: var(--brand-navy-900); /* header/hero */
+  --color-surface: #0b1220; /* darker surface */
+  --color-card: #111827; /* card surfaces */
+  --color-text: var(--brand-gray-50);
+  --color-text-muted: #9ca3af; /* muted text */
+  --color-border: #1f2937; /* subtle borders */
+
+  --radius: 10px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+  --shadow-md: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* CSS Reset-ish */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--color-text);
+  background: #0a0f1f;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(180deg, var(--color-bg), rgba(15,23,42,0.85));
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 64px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  margin-right: auto;
+}
+/* Brand logo helper: used for SVG lockup/img */
+.brand-logo {
+  display: inline-block;
+  width: 180px; /* fixed width for pixel-perfect parity */
+  height: auto;
+}
+@media (max-width: 720px) {
+  .brand-logo { width: 150px; }
+}
+.nav {
+  display: flex;
+  gap: 14px;
+}
+.nav a {
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--color-text-muted);
+}
+.nav a.active, .nav a:hover {
+  color: var(--color-text);
+  background: rgba(255,255,255,0.04);
+}
+
+/* Buttons */
+.btn {
+  appearance: none;
+  border: 1px solid var(--color-border);
+  background: #0e1628;
+  color: var(--color-text);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(1.05); }
+.btn:active { transform: translateY(0.5px); }
+
+.btn-primary {
+  border: none;
+  background: linear-gradient(180deg, var(--color-primary), var(--color-primary-600));
+  color: #0b1220;
+  font-weight: 600;
+}
+
+/* Main layout */
+.main {
+  padding: 28px 0 40px;
+}
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.muted { color: var(--color-text-muted); }
+
+/* Forms */
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  background: #0c1426;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+.label { font-size: 13px; color: var(--color-text-muted); }
+
+/* Utilities */
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; align-items: center; gap: 12px; }
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+
+/* Headings use Space Grotesk for a modern tech style */
+h1, h2, h3, .h1, .h2, .h3 {
+  font-family: 'Sora', 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* Brand on dark/light helpers for inline SVG if used */
+.brand-on-dark { color: #E6EDF3; }
+.brand-on-light { color: var(--brand-navy-900); }
+
+/* --- Landing page helpers --- */
+.section-subtitle { color: var(--color-text-muted); font-size: 14px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid var(--color-border); font-size: 12px; }
+.badges { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; color: var(--color-text-muted); }
+.feature-list { display: grid; gap: 8px; }
+.feature-list .item { display: flex; align-items: center; gap: 8px; }
+.metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.metric { background: #0e1628; border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; text-align: center; }
+.faq { display: grid; gap: 8px; }
+.faq-item { background: #0e1628; border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+.faq-q { cursor: pointer; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+.faq-a { padding: 0 16px 14px; color: var(--color-text-muted); display: none; }
+.faq-item.open .faq-a { display: block; }
+
+/* Brand gradient helper (teal -> cyan) */
+.brand-gradient {
+  background-image: linear-gradient(135deg, var(--brand-teal-500), var(--brand-cyan-400));
+}
+
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .nav { display: none; }
+}

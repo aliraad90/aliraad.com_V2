@@ -1,0 +1,11 @@
+<svg width="720" height="100" viewBox="0 0 720 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ali Raad Hussein - Secure Infrastructure">
+  <g transform="translate(0,0)" fill="none" stroke="#E6EDF3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 10 C30 10 18 20 18 40 v22 c0 22 18 33 32 42 c14 -9 32 -20 32 -42 V40 c0 -20 -12 -30 -32 -30 z"/>
+    <path d="M32 70 V40 L50 55 L68 40 V70" />
+    <line x1="40" y1="62" x2="60" y2="62"/>
+  </g>
+  <g transform="translate(110,26)" fill="#E6EDF3">
+    <text x="0" y="0" font-family="Space Grotesk, Inter, 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="28" font-weight="700">ALI RAAD HUSSEIN</text>
+    <text x="0" y="28" font-family="Inter, 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="14" font-weight="500" opacity="0.85">Network Engineering · Cybersecurity · Digitalization</text>
+  </g>
+</svg>

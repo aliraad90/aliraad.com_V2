@@ -1,0 +1,33 @@
+{
+  "name": "Ali Raad Hussein",
+  "tagline": "Freelance IT Consultant | Network & System Administrator | PMP‑Certified Project Manager",
+  "intro": "IT professional with 12+ years of experience spanning network engineering, systems administration, and project leadership. Currently at Siemens Energy - Maisan, Rumaila and Shatt Al-Basrah Power Plant (Iraq), I help organizations design secure networks, modernize infrastructure, and execute projects with measurable outcomes.",
+  "projects": [
+    {
+      "company": "Siemens Energy — Maisan Power Plant",
+      "role": "IT Network & System Administrator",
+      "highlights": [
+        "Administered SPPA‑T3000 (Omnivise‑T3000) system",
+        "Designed and implemented a secure IT network",
+        "Reduced downtime using monitoring tools (PRTG, SolarWinds)"
+      ]
+    },
+    {
+      "company": "Al‑Riyadh Cables Company",
+      "role": "Network Administrator",
+      "highlights": [
+        "Led IT team to upgrade infrastructure",
+        "Improved data protection via new security protocols"
+      ]
+    },
+    {
+      "company": "SOSi International / KBR / Uruk Contracting",
+      "role": "Network/IT Operations",
+      "highlights": [
+        "Managed IT operations for international clients",
+        "Supervised 5–30 staff members",
+        "Reduced network downtime by ~20%"
+      ]
+    }
+  ]
+}

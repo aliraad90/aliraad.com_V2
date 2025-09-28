@@ -1,0 +1,115 @@
+local_backend: false
+# Offline mode: no external backend or local proxy required.
+backend:
+  name: test-repo
+media_folder: "public/uploads"
+public_folder: "/uploads"
+editorial_workflow: true
+collections:
+  - name: site
+    label: Site Settings
+    files:
+      - file: "public/content/site.json"
+        label: Site
+        name: site
+        fields:
+          - { label: Header Subtitle, name: headerSubtitle, widget: string }
+          - { label: Headshot, name: headshot, widget: image, required: false }
+          - { label: Email, name: email, widget: string }
+          - { label: LinkedIn URL, name: linkedin, widget: string }
+          - { label: Phone, name: phone, widget: string }
+          - { label: Credly Profile URL, name: credly, widget: string, required: false }
+          - { label: Footer Note, name: footerNote, widget: string, required: false }
+  - name: home
+    label: Home Page
+    files:
+      - file: "public/content/home.json"
+        label: Home
+        name: home
+        fields:
+          - { label: Hero Title, name: heroTitle, widget: string }
+          - { label: Hero Subtitle, name: heroSubtitle, widget: string }
+          - { label: Hero Summary, name: heroSummary, widget: text }
+          - label: Metrics
+            name: metrics
+            widget: list
+            fields:
+              - {label: label, name: label, widget: string}
+              - {label: value, name: value, widget: string}
+          - label: FAQ
+            name: faq
+            widget: list
+            fields:
+              - {label: question, name: q, widget: string}
+              - {label: answer, name: a, widget: text}
+  - name: services
+    label: Services
+    files:
+      - file: "public/content/services.json"
+        label: Services
+        name: services
+        fields:
+          - label: Services
+            name: items
+            widget: list
+            fields:
+              - {label: title, name: title, widget: string}
+              - label: bullets
+                name: items
+                widget: list
+                field: {label: item, name: item, widget: string}
+  - name: portfolio
+    label: Portfolio
+    files:
+      - file: "public/content/portfolio.json"
+        label: Portfolio
+        name: portfolio
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Intro, name: intro, widget: text }
+          - label: Projects
+            name: projects
+            widget: list
+            fields:
+              - { label: company, name: company, widget: string }
+              - { label: role, name: role, widget: string }
+              - { label: image, name: image, widget: image, required: false }
+              - label: highlights
+                name: highlights
+                widget: list
+                field: {label: highlight, name: highlight, widget: string}
+  - name: certifications
+    label: Certifications
+    files:
+      - file: "public/content/certifications.json"
+        label: Certifications
+        name: certifications
+        fields:
+          - label: Certifications
+            name: items
+            widget: list
+            field: { label: certification, name: certification, widget: string }
+  - name: pricing
+    label: Pricing
+    files:
+      - file: "public/content/pricing.json"
+        label: Pricing
+        name: pricing
+        fields:
+          - label: Tiers
+            name: tiers
+            widget: list
+            fields:
+              - { label: name, name: name, widget: string }
+              - { label: rate, name: rate, widget: number }
+              - { label: currency, name: currency, widget: string }
+              - label: details
+                name: details
+                widget: list
+                field: { label: detail, name: detail, widget: string }
+              - { label: note, name: note, widget: string, required: false }
+          - label: Billing Terms
+            name: billing
+            widget: list
+            field: { label: item, name: item, widget: string }

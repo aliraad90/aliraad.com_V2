@@ -1,0 +1,16 @@
+<svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="aliraad — a+1 monogram">
+  <defs>
+    <linearGradient id="a1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7B5CFF"/>
+      <stop offset="100%" stop-color="#2EB3FF"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#a1Grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Circular stem of 'a' -->
+    <path d="M80 110 a30 30 0 1 0 60 0 a30 30 0 1 0 -60 0"/>
+    <!-- Upright '1' integrated into the loop (notch) -->
+    <path d="M130 70 L130 140"/>
+    <!-- Top facet for a distinctive cut (refined from the sample) -->
+    <path d="M120 60 L146 66"/>
+  </g>
+</svg>

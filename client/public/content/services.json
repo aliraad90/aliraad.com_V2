@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "title": "IT Infrastructure",
+      "items": [
+        "Server and storage planning (Windows/Linux)",
+        "Active Directory, DNS, DHCP, GPO",
+        "Backup/DR strategy and hardening"
+      ]
+    },
+    {
+      "title": "Networking (Cisco/MikroTik)",
+      "items": [
+        "Routing, switching, VLANs, QoS, HA",
+        "VPN (L2TP/IPsec, site‑to‑site), PPPoE",
+        "Firewalling and policy design"
+      ]
+    },
+    {
+      "title": "Cloud Solutions (Azure/AWS/GCP)",
+      "items": [
+        "Hybrid networking and secure connectivity",
+        "Identity, IAM/RBAC, landing zones",
+        "Monitoring and cost governance"
+      ]
+    },
+    {
+      "title": "Cybersecurity",
+      "items": [
+        "Hardening and baselines (servers, network)",
+        "Vulnerability remediation & patching",
+        "SIEM/logging and incident response playbooks"
+      ]
+    },
+    {
+      "title": "Project Management (PMP)",
+      "items": [
+        "Scope, timelines, stakeholder comms",
+        "Leading 5–30 person teams",
+        "KPIs: downtime reduction, risk mitigation"
+      ]
+    }
+  ]
+}

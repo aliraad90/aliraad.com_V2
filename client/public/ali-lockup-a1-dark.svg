@@ -1,0 +1,19 @@
+<svg width="720" height="110" viewBox="0 0 720 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="aliraad — a+1 monogram lockup (dark)">
+  <defs>
+    <linearGradient id="a1G" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7B5CFF"/>
+      <stop offset="100%" stop-color="#2EB3FF"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon: filled gradient for strong presence on dark header -->
+  <g transform="translate(6,6)">
+    <path d="M80 48 a32 32 0 1 0 64 0 a32 32 0 1 0 -64 0" fill="url(#a1G)"/>
+    <path d="M140 16 L140 80" stroke="url(#a1G)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M124 8 L154 14" stroke="url(#a1G)" stroke-width="16" stroke-linecap="round"/>
+  </g>
+  <!-- Wordmark -->
+  <g transform="translate(220,30)">
+    <text x="0" y="0" font-family="Sora, Space Grotesk, Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="34" font-weight="800" fill="#E6EDF3" letter-spacing="0.5">ALIRAAD</text>
+    <text x="0" y="30" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="14" font-weight="600" fill="#AAB2BF" opacity="0.95">Network Administrator</text>
+  </g>
+</svg>

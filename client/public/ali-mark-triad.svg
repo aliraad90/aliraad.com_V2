@@ -1,0 +1,20 @@
+<svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ali Raad – Triad Node + Wave">
+  <defs>
+    <linearGradient id="triadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14C3A3"/>
+      <stop offset="100%" stop-color="#55E1E3"/>
+    </linearGradient>
+  </defs>
+  <rect width="220" height="220" fill="none"/>
+  <!-- Triad nodes -->
+  <g fill="none" stroke="url(#triadGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="110" cy="48" r="12"/>
+    <circle cx="56" cy="152" r="12"/>
+    <circle cx="164" cy="152" r="12"/>
+    <line x1="110" y1="60" x2="56" y2="140"/>
+    <line x1="110" y1="60" x2="164" y2="140"/>
+    <line x1="56" y1="152" x2="164" y2="152"/>
+    <!-- Energy wave through center -->
+    <path d="M40 120 C70 100 90 140 110 120 C130 100 150 140 180 120"/>
+  </g>
+</svg>

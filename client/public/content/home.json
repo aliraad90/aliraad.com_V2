@@ -1,0 +1,17 @@
+{
+  "heroTitle": "Freelancer IT & Networking Services",
+  "heroSubtitle": "IT Freelancer | Senior Network & System Engineer | PMP",
+  "heroSummary": "12+ years across Siemens Energy and leading enterprises. I design resilient networks, administer systems, secure infrastructure, and lead projects end-to-end. Certified PMP, CCNP/CCNA, MCSA/MCSE, MTCNA/MTCRE.",
+  "metrics": [
+    { "label": "Downtime Reduction", "value": "38%" },
+    { "label": "Migrated to Azure AD", "value": "200+ Users" },
+    { "label": "Team Members Led", "value": "5–30" }
+  ],
+  "faq": [
+    { "q": "What services do you provide?", "a": "Freelance IT consulting across networking (Cisco/MikroTik, EIGRP/OSPF, firewalls, VPNs), systems (Windows Server, Microsoft 365, VMware, AD/DNS/DHCP/GPO), cloud (Azure/AWS/GCP), cybersecurity (hardening, policies, Fortinet/Microsoft Security), and PMP-based project leadership." },
+    { "q": "How do you charge?", "a": "Hourly rates by engagement type: Remote Support, Consulting & Design, and On-site/Project Lead. Billing is simple and transparent." },
+    { "q": "Which payment methods and currency do you accept?", "a": "ZainCash and SuperQi are accepted. Currency: IQD. Bank transfer can be arranged upon request." },
+    { "q": "Do you work on-site or remotely?", "a": "Yes. Remote worldwide; on-site available based on scope and scheduling." },
+    { "q": "Can you provide documentation and handover?", "a": "Absolutely. I deliver clear documentation, diagrams, and a proper handover. For larger work, I provide weekly timesheets." }
+  ]
+}

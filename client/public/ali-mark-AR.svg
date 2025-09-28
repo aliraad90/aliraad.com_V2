@@ -1,0 +1,11 @@
+<svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ali Raad Monogram - AR Shield Network">
+  <g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Shield -->
+    <path d="M110 20 C70 20 40 40 40 80 v40 c0 40 35 60 70 80 c35 -20 70 -40 70 -80 V80 c0 -40 -30 -60 -70 -60 z"/>
+    <!-- AR Monogram -->
+    <path d="M78 140 V84 H110 c12 0 22 10 22 22 c0 12 -10 22 -22 22 H90"/>
+    <path d="M134 140 L120 118 M120 118 L136 100"/>
+    <!-- Network connector motif under the letters -->
+    <line x1="86" y1="150" x2="134" y2="150" />
+  </g>
+</svg>

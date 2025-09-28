@@ -1,0 +1,23 @@
+<svg width="720" height="100" viewBox="0 0 720 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ali Raad – Triad Node + Wave (Dark)">
+  <defs>
+    <linearGradient id="triadGradD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14C3A3"/>
+      <stop offset="100%" stop-color="#55E1E3"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon -->
+  <g transform="translate(0,0)" fill="none" stroke="url(#triadGradD)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="50" cy="28" r="8"/>
+    <circle cx="28" cy="70" r="8"/>
+    <circle cx="72" cy="70" r="8"/>
+    <line x1="50" y1="36" x2="28" y2="62"/>
+    <line x1="50" y1="36" x2="72" y2="62"/>
+    <line x1="28" y1="70" x2="72" y2="70"/>
+    <path d="M16 58 C30 48 40 64 50 56 C60 48 70 64 84 56"/>
+  </g>
+  <!-- Wordmark -->
+  <g transform="translate(110,26)" fill="#E6EDF3">
+    <text x="0" y="0" font-family="Sora, Space Grotesk, Inter, 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="28" font-weight="700">ALI RAAD HUSSEIN</text>
+    <text x="0" y="28" font-family="Inter, 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="14" font-weight="600" opacity="0.9">Network Engineering · Cybersecurity · Digitalization</text>
+  </g>
+</svg>

@@ -1,0 +1,43 @@
+{
+  "tiers": [
+    {
+      "name": "Remote Support",
+      "rate": 40,
+      "currency": "USD",
+      "details": [
+        "Troubleshooting & fixes",
+        "Small changes, advice",
+        "Chat/Call/Remote session"
+      ],
+      "note": "Min. 1 hour, then billed in 15‑minute increments"
+    },
+    {
+      "name": "Consulting & Design",
+      "rate": 60,
+      "currency": "USD",
+      "details": [
+        "Network/system design",
+        "Security policies & reviews",
+        "Migration planning & guidance"
+      ],
+      "note": "Scoping call included before engagement"
+    },
+    {
+      "name": "On‑site / Project Lead",
+      "rate": 80,
+      "currency": "USD",
+      "details": [
+        "Hands‑on implementation",
+        "Team leadership (PMP)",
+        "Documentation & handover"
+      ],
+      "note": "Travel/time expenses may apply for on‑site work"
+    }
+  ],
+  "billing": [
+    "Accepted payment methods: ZainCash, SuperQi. Bank transfer available on request.",
+    "Accepted currencies: IQD. Invoices provided.",
+    "NDA available upon request. Security and confidentiality are prioritized.",
+    "Weekly timesheets for longer engagements. Project quotes available after scoping."
+  ]
+}
