@@ -7,9 +7,8 @@
     "postinstall": "echo postinstall"
   },
   "devDependencies": {
-    "@aws-amplify/backend": "^0.16.0",
-    "@aws-amplify/backend-api": "^0.16.0",
-    "@aws-amplify/backend-function": "^0.16.0",
+    "@aws-amplify/backend": "^1.16.1",
+    "@aws-amplify/backend-function": "^1.14.1",
     "typescript": "^5.4.5"
   }
 }
