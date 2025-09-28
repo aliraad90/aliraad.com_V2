@@ -6,7 +6,7 @@ frontend:
         - npm --version
         - node --version
         - cd client
-        - npm install
+        - npm install --include=dev
     build:
       commands:
         - npm run build
