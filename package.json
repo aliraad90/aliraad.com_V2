@@ -1,0 +1,15 @@
+{
+  "name": "aliraad.com_V2",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "echo 'root build noop'",
+    "postinstall": "echo postinstall"
+  },
+  "devDependencies": {
+    "@aws-amplify/backend": "^0.16.0",
+    "@aws-amplify/backend-api": "^0.16.0",
+    "@aws-amplify/backend-function": "^0.16.0",
+    "typescript": "^5.4.5"
+  }
+}
