@@ -1,4 +1,10 @@
 version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - npm install
+        - npx ampx sandbox --once
 frontend:
   phases:
     preBuild:
@@ -18,3 +24,4 @@ frontend:
     paths:
       - client/node_modules/**/*
       - client/.vite/**/*
+      - node_modules/**/*
