@@ -11,8 +11,8 @@ const router = express.Router();
 const transporter = nodemailer.createTransporter({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER || 'ccr1036user@gmail.com',
-    pass: process.env.GMAIL_APP_PASSWORD || process.env.GMAIL_PASSWORD
+    user: 'ccr1036user@gmail.com',
+    pass: 'yded ccde zkry rzxg'
   }
 });
 
@@ -20,8 +20,8 @@ const transporter = nodemailer.createTransporter({
 async function sendEmailNotification(contactData) {
   try {
     const mailOptions = {
-      from: process.env.GMAIL_USER || 'ccr1036user@gmail.com',
-      to: process.env.NOTIFICATION_EMAIL || 'ccr1036user@gmail.com',
+      from: 'ccr1036user@gmail.com',
+      to: 'ccr1036user@gmail.com',
       subject: `New Contact Form: ${contactData.subject}`,
       html: `
         <html>
@@ -64,7 +64,7 @@ Submitted at: ${new Date().toLocaleString()}
 async function sendAutoReply(contactData) {
   try {
     const mailOptions = {
-      from: process.env.GMAIL_USER || 'ccr1036user@gmail.com',
+      from: 'ccr1036user@gmail.com',
       to: contactData.email,
       subject: `Thank you for your message - We'll be in touch soon!`,
       html: `
