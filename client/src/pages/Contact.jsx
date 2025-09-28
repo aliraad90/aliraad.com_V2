@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import { sendContact } from '../publicApi.js';
 
 export default function Contact() {
@@ -8,18 +7,6 @@ export default function Contact() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState('');
-  const location = useLocation();
-
-  // Prefill when coming from Book a Call CTA or Free Intro Call
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const topic = params.get('topic');
-    if (topic === 'book-call-30') {
-      setMessage((prev) => prev && prev.length > 0 ? prev : 'I would like to book a 30-minute discovery call ($50).\n\nPreferred times (with timezone):\n- ...\n\nBrief context about my needs:\n- ...');
-    } else if (topic === 'intro-call') {
-      setMessage((prev) => prev && prev.length > 0 ? prev : 'I would like to schedule a free 10–15 minute intro call.\n\nPreferred times (with timezone):\n- ...\n\nBrief context about my needs:\n- ...');
-    }
-  }, [location.search]);
 
   async function submit(e) {
     e.preventDefault();
@@ -36,29 +23,10 @@ export default function Contact() {
   return (
     <div style={{ maxWidth: 720 }}>
       <h3>Contact</h3>
+      
+      {/* Direct Contact Info */}
       <div className="card" style={{ padding: 16, marginBottom: 16 }}>
         <div className="stack">
-          {/* Paid call notice when applicable */}
-          {(() => {
-            const t = new URLSearchParams(location.search).get('topic');
-            if (t === 'book-call-30') {
-              return (
-                <div className="row" style={{ gap: 8, alignItems: 'center', background: 'rgba(255,200,0,0.08)', border: '1px solid rgba(255,200,0,0.35)', padding: 8, borderRadius: 6 }}>
-                  <div className="section-subtitle">Book a Call (30 min)</div>
-                  <div className="muted">This discovery/consultation call is paid: <strong>$50</strong> for <strong>30 minutes</strong>. Fee is credited toward projects over <strong>$500</strong>.</div>
-                </div>
-              );
-            }
-            if (t === 'intro-call') {
-              return (
-                <div className="row" style={{ gap: 8, alignItems: 'center', background: 'rgba(120,200,255,0.08)', border: '1px solid rgba(120,200,255,0.35)', padding: 8, borderRadius: 6 }}>
-                  <div className="section-subtitle">Free Intro Call (10–15 min)</div>
-                  <div className="muted">A short introduction call to discuss fit and logistics. For deeper scoping, choose the paid 30‑minute call (credited toward projects over $500).</div>
-                </div>
-              );
-            }
-            return null;
-          })()}
           <div className="row" style={{ gap: 12 }}>
             <div className="section-title">Direct</div>
           </div>
@@ -85,15 +53,69 @@ export default function Contact() {
           </div>
         </div>
       </div>
-      <p>Prefer a quick message? Use the form below and I’ll get back to you.</p>
-      <form onSubmit={submit} style={{ display: 'grid', gap: 8 }}>
-        <input placeholder="Your Name" value={name} onChange={(e)=>setName(e.target.value)} required />
-        <input placeholder="Your Phone (optional)" value={phone} onChange={(e)=>setPhone(e.target.value)} />
-        <input placeholder="Your Email" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} required />
-        <textarea placeholder="Message" rows={6} value={message} onChange={(e)=>setMessage(e.target.value)} required />
-        <button type="submit">Send</button>
+
+      {/* Contact Form */}
+      <p style={{ marginBottom: 16, fontSize: 16 }}>Prefer a quick message? Use the form below and I'll get back to you.</p>
+      
+      <form onSubmit={submit} style={{ display: 'grid', gap: 12, marginBottom: 16 }}>
+        <input 
+          placeholder="Your Name" 
+          value={name} 
+          onChange={(e)=>setName(e.target.value)} 
+          required 
+          style={{ padding: 12, border: '1px solid #ccc', borderRadius: 4 }}
+        />
+        <input 
+          placeholder="Your Phone (optional)" 
+          value={phone} 
+          onChange={(e)=>setPhone(e.target.value)} 
+          style={{ padding: 12, border: '1px solid #ccc', borderRadius: 4 }}
+        />
+        <input 
+          placeholder="Your Email" 
+          type="email" 
+          value={email} 
+          onChange={(e)=>setEmail(e.target.value)} 
+          required 
+          style={{ padding: 12, border: '1px solid #ccc', borderRadius: 4 }}
+        />
+        <textarea 
+          placeholder="Message" 
+          rows={6} 
+          value={message} 
+          onChange={(e)=>setMessage(e.target.value)} 
+          required 
+          style={{ padding: 12, border: '1px solid #ccc', borderRadius: 4, resize: 'vertical' }}
+        />
+        <button 
+          type="submit" 
+          style={{ 
+            padding: 12, 
+            backgroundColor: '#007bff', 
+            color: 'white', 
+            border: 'none', 
+            borderRadius: 4, 
+            cursor: 'pointer',
+            fontSize: 16,
+            fontWeight: 'bold'
+          }}
+        >
+          Send
+        </button>
       </form>
-      {status && <p>{status}</p>}
+      
+      {status && (
+        <p style={{ 
+          padding: 12, 
+          backgroundColor: status.includes('Thanks') ? '#d4edda' : '#f8d7da', 
+          color: status.includes('Thanks') ? '#155724' : '#721c24',
+          border: `1px solid ${status.includes('Thanks') ? '#c3e6cb' : '#f5c6cb'}`,
+          borderRadius: 4,
+          margin: 0
+        }}>
+          {status}
+        </p>
+      )}
     </div>
   );
 }
