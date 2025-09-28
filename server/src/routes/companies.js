@@ -1,10 +1,73 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const AWS = require('aws-sdk');
 const { requireAuth, requireRole } = require('../middleware/auth.js');
 const { User } = require('../models/user.js');
 const { Contact } = require('../models/company.js');
 
 const router = express.Router();
+
+// Initialize AWS SES
+const ses = new AWS.SES({ region: 'us-east-1' });
+
+// Function to send email notification
+async function sendEmailNotification(contactData) {
+  try {
+    const params = {
+      Destination: {
+        ToAddresses: [process.env.NOTIFICATION_EMAIL || 'aliraad90@gmail.com']
+      },
+      Message: {
+        Body: {
+          Html: {
+            Charset: 'UTF-8',
+            Data: `
+              <html>
+                <body>
+                  <h2>New Contact Form Submission</h2>
+                  <p><strong>Name:</strong> ${contactData.name}</p>
+                  <p><strong>Email:</strong> ${contactData.email}</p>
+                  <p><strong>Subject:</strong> ${contactData.subject}</p>
+                  <p><strong>Message:</strong></p>
+                  <p>${contactData.message.replace(/\n/g, '<br>')}</p>
+                  <hr>
+                  <p><em>Submitted at: ${new Date().toLocaleString()}</em></p>
+                </body>
+              </html>
+            `
+          },
+          Text: {
+            Charset: 'UTF-8',
+            Data: `
+New Contact Form Submission
+
+Name: ${contactData.name}
+Email: ${contactData.email}
+Subject: ${contactData.subject}
+
+Message:
+${contactData.message}
+
+Submitted at: ${new Date().toLocaleString()}
+            `
+          }
+        },
+        Subject: {
+          Charset: 'UTF-8',
+          Data: `New Contact Form: ${contactData.subject}`
+        }
+      },
+      Source: process.env.FROM_EMAIL || 'aliraad90@gmail.com'
+    };
+
+    const result = await ses.sendEmail(params).promise();
+    console.log('Email sent successfully:', result.MessageId);
+    return result;
+  } catch (error) {
+    console.error('Failed to send email:', error);
+    throw error;
+  }
+}
 
 // Admin: list all users
 router.get('/', requireAuth, requireRole('admin'), async (req, res) => {
@@ -34,15 +97,31 @@ router.post('/contact', async (req, res) => {
   }
 
   try {
-    // Log contact form submission (you can save to database later)
+    const contactData = { name, email, subject, message };
+    
+    // Log contact form submission
     console.log('Contact form submission:', { 
-      name, 
-      email, 
-      subject, 
-      message, 
+      ...contactData, 
       timestamp: new Date(),
       ip: req.ip || req.connection.remoteAddress 
     });
+
+    // Save to database if available
+    if (mongoose.connection.readyState === 1) {
+      await Contact.create({
+        ...contactData,
+        ip: req.ip || req.connection.remoteAddress
+      });
+    }
+
+    // Send email notification
+    try {
+      await sendEmailNotification(contactData);
+      console.log('Email notification sent successfully');
+    } catch (emailError) {
+      console.error('Email notification failed:', emailError);
+      // Don't fail the request if email fails, just log it
+    }
     
     res.status(201).json({ 
       success: true, 
