@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { sendContact } from '../publicApi.js';
 
 export default function Contact() {
+  // Contact form component with auto-reply functionality
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
