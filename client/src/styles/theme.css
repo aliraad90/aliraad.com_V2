@@ -24,13 +24,25 @@
 }
 
 /* CSS Reset-ish */
-* { box-sizing: border-box; }
-html, body, #root { height: 100%; }
+* { 
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html, body, #root { 
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 body {
   margin: 0;
-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   color: var(--color-text);
   background: #0a0f1f;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -173,11 +185,107 @@ h1, h2, h3, .h1, .h2, .h3 {
   background-image: linear-gradient(135deg, var(--brand-teal-500), var(--brand-cyan-400));
 }
 
-@media (max-width: 900px) {
-  .grid-3 { grid-template-columns: 1fr; }
-  .metrics { grid-template-columns: 1fr; }
+/* Mobile Menu */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
 }
 
-@media (max-width: 720px) {
-  .nav { display: none; }
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 20px;
+  z-index: 100;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-nav.open {
+  display: block;
+}
+
+.mobile-nav a {
+  display: block;
+  padding: 12px 0;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobile-nav a:last-child {
+  border-bottom: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 16px;
+  }
+  
+  .grid-3, .metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .header-inner {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .nav {
+    display: none;
+  }
+  
+  .grid-3, .metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 20px;
+  }
+  
+  .main {
+    padding: 20px 0;
+  }
+  
+  .card {
+    border-radius: 8px;
+  }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Fix for iOS Safari 15+ viewport height issue */
+  @media (max-width: 768px) {
+    .main {
+      min-height: calc(100vh - 64px);
+    }
+  }
+  
+  /* Prevent text size adjustment on orientation change */
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Touch target sizes */
+a, button, .btn, .nav a {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
