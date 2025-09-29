@@ -22,120 +22,109 @@ export default function Contact() {
   }
 
   return (
-    <div>
-      <h3>Contact</h3>
+    <div style={{ padding: '20px 0', minHeight: '400px' }}>
+      <h3 className="section-title" style={{ marginBottom: '30px' }}>Contact</h3>
       
-      <div style={{ marginBottom: '20px' }}>
-        <h4>Direct</h4>
-        <p>Email: <a href="mailto:aliraad90@gmail.com">aliraad90@gmail.com</a></p>
-        <p>WhatsApp: <a href="https://wa.me/9647835949338" target="_blank" rel="noreferrer">Chat on WhatsApp</a></p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/ali-raad-hussein/" target="_blank" rel="noreferrer">/in/ali-raad-hussein</a></p>
-        <p>Phone: <a href="tel:+9647835949338">+964 783 594 9338</a></p>
+      <div className="card" style={{ padding: '20px', marginBottom: '30px' }}>
+        <h4 style={{ color: '#fff', marginBottom: '15px' }}>Direct Contact</h4>
+        <div className="stack">
+          <p>📧 Email: <a href="mailto:aliraad90@gmail.com" style={{ color: 'var(--color-primary)' }}>aliraad90@gmail.com</a></p>
+          <p>📱 WhatsApp: <a href="https://wa.me/9647835949338" target="_blank" rel="noreferrer" style={{ color: 'var(--color-primary)' }}>Chat on WhatsApp</a></p>
+          <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/ali-raad-hussein/" target="_blank" rel="noreferrer" style={{ color: 'var(--color-primary)' }}>/in/ali-raad-hussein</a></p>
+          <p>📞 Phone: <a href="tel:+9647835949338" style={{ color: 'var(--color-primary)' }}>+964 783 594 9338</a></p>
+        </div>
       </div>
 
-      <p style={{ marginBottom: '20px', fontSize: '16px' }}>
-        Prefer a quick message? Use the form below and I'll get back to you.
-      </p>
-      
-      <form onSubmit={submit} style={{ maxWidth: '500px' }}>
-        <div style={{ marginBottom: '15px' }}>
-          <input 
-            type="text"
-            placeholder="Your Name" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-            required 
-            style={{ 
-              width: '100%', 
-              padding: '10px', 
-              border: '1px solid #ccc', 
-              borderRadius: '4px',
-              fontSize: '16px'
-            }}
-          />
-        </div>
+      <div className="card" style={{ padding: '20px' }}>
+        <h4 style={{ color: '#fff', marginBottom: '15px' }}>Quick Message</h4>
+        <p className="muted" style={{ marginBottom: '20px' }}>
+          Prefer a quick message? Use the form below and I'll get back to you.
+        </p>
         
-        <div style={{ marginBottom: '15px' }}>
-          <input 
-            type="text"
-            placeholder="Your Phone (optional)" 
-            value={phone} 
-            onChange={(e) => setPhone(e.target.value)} 
+        <form onSubmit={submit} className="stack">
+          <div>
+            <label className="label">Your Name *</label>
+            <input 
+              type="text"
+              placeholder="Enter your full name" 
+              value={name} 
+              onChange={(e) => setName(e.target.value)} 
+              required 
+              className="input"
+              style={{ marginTop: '5px' }}
+            />
+          </div>
+          
+          <div>
+            <label className="label">Your Phone (optional)</label>
+            <input 
+              type="text"
+              placeholder="Enter your phone number" 
+              value={phone} 
+              onChange={(e) => setPhone(e.target.value)} 
+              className="input"
+              style={{ marginTop: '5px' }}
+            />
+          </div>
+          
+          <div>
+            <label className="label">Your Email *</label>
+            <input 
+              type="email"
+              placeholder="Enter your email address" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+              className="input"
+              style={{ marginTop: '5px' }}
+            />
+          </div>
+          
+          <div>
+            <label className="label">Message *</label>
+            <textarea 
+              placeholder="Tell me about your project or question..." 
+              rows={6} 
+              value={message} 
+              onChange={(e) => setMessage(e.target.value)} 
+              required 
+              className="input"
+              style={{ 
+                marginTop: '5px',
+                resize: 'vertical',
+                minHeight: '120px'
+              }}
+            />
+          </div>
+          
+          <button 
+            type="submit" 
+            className="btn btn-primary"
             style={{ 
-              width: '100%', 
-              padding: '10px', 
-              border: '1px solid #ccc', 
-              borderRadius: '4px',
-              fontSize: '16px'
-            }}
-          />
-        </div>
-        
-        <div style={{ marginBottom: '15px' }}>
-          <input 
-            type="email"
-            placeholder="Your Email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-            style={{ 
-              width: '100%', 
-              padding: '10px', 
-              border: '1px solid #ccc', 
-              borderRadius: '4px',
-              fontSize: '16px'
-            }}
-          />
-        </div>
-        
-        <div style={{ marginBottom: '15px' }}>
-          <textarea 
-            placeholder="Message" 
-            rows={6} 
-            value={message} 
-            onChange={(e) => setMessage(e.target.value)} 
-            required 
-            style={{ 
-              width: '100%', 
-              padding: '10px', 
-              border: '1px solid #ccc', 
-              borderRadius: '4px',
+              width: '100%',
+              padding: '12px', 
               fontSize: '16px',
-              resize: 'vertical'
+              fontWeight: 'bold',
+              marginTop: '10px'
             }}
-          />
-        </div>
+          >
+            Send Message
+          </button>
+        </form>
         
-        <button 
-          type="submit" 
-          style={{ 
-            width: '100%',
-            padding: '12px', 
-            backgroundColor: '#007bff', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px', 
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}
-        >
-          Send
-        </button>
-      </form>
-      
-      {status && (
-        <div style={{ 
-          marginTop: '20px',
-          padding: '15px', 
-          backgroundColor: status.includes('Thanks') ? '#d4edda' : '#f8d7da', 
-          color: status.includes('Thanks') ? '#155724' : '#721c24',
-          border: `1px solid ${status.includes('Thanks') ? '#c3e6cb' : '#f5c6cb'}`,
-          borderRadius: '4px'
-        }}>
-          {status}
-        </div>
-      )}
+        {status && (
+          <div style={{ 
+            marginTop: '20px',
+            padding: '15px', 
+            backgroundColor: status.includes('Thanks') ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)', 
+            color: status.includes('Thanks') ? '#22c55e' : '#ef4444',
+            border: `1px solid ${status.includes('Thanks') ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`,
+            borderRadius: '8px'
+          }}>
+            {status}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
