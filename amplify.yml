@@ -10,6 +10,7 @@ frontend:
     build:
       commands:
         - npm run build
+        - mkdir -p client/dist
         - echo '/* /index.html 200' > client/dist/_redirects
         - echo '/* /index.html 200' > client/dist/200.html
   artifacts:
