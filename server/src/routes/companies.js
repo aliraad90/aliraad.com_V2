@@ -232,6 +232,43 @@ router.post('/test-email', async (req, res) => {
   }
 });
 
+// Test auto-reply endpoint (for debugging)
+router.post('/test-auto-reply', async (req, res) => {
+  try {
+    const { email, name } = req.body;
+    
+    if (!email || !name) {
+      return res.status(400).json({ error: 'Email and name are required' });
+    }
+    
+    console.log('Testing auto-reply functionality...');
+    
+    const testContactData = {
+      name: name,
+      email: email,
+      subject: 'Test Auto-Reply',
+      message: 'This is a test message to verify auto-reply functionality.'
+    };
+    
+    const result = await sendAutoReply(testContactData);
+    console.log('Auto-reply test sent successfully:', result.messageId);
+    
+    res.json({ 
+      success: true, 
+      message: 'Auto-reply test sent successfully',
+      messageId: result.messageId,
+      to: email
+    });
+  } catch (error) {
+    console.error('Auto-reply test failed:', error);
+    res.status(500).json({ 
+      error: 'Auto-reply test failed', 
+      details: error.message,
+      code: error.code 
+    });
+  }
+});
+
 // Public: contact form submission
 router.post('/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
@@ -258,38 +295,56 @@ router.post('/contact', async (req, res) => {
       });
     }
 
-    // Send email notification to admin
+    // Send both emails in parallel for better performance
     let emailSent = false;
-    try {
-      await sendEmailNotification(contactData);
-      console.log('Email notification sent successfully');
-      emailSent = true;
-    } catch (emailError) {
-      console.error('Email notification failed:', emailError);
-      // Don't fail the request if email fails, just log it
-    }
-
-    // Send auto-reply to customer (optional - don't block response)
-    // Use Promise.race with timeout to prevent hanging
-    try {
-      const autoReplyPromise = sendAutoReply(contactData);
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Auto-reply timeout')), 5000)
-      );
-      
-      await Promise.race([autoReplyPromise, timeoutPromise]);
-      console.log('Auto-reply sent successfully');
-    } catch (autoReplyError) {
-      console.error('Auto-reply failed or timed out:', autoReplyError);
-      // Don't fail the request if auto-reply fails, just log it
-    }
+    let autoReplySent = false;
+    
+    const emailPromises = [];
+    
+    // Add admin notification promise
+    emailPromises.push(
+      sendEmailNotification(contactData)
+        .then(() => {
+          console.log('Email notification sent successfully');
+          emailSent = true;
+        })
+        .catch((emailError) => {
+          console.error('Email notification failed:', emailError);
+        })
+    );
+    
+    // Add auto-reply promise with timeout
+    emailPromises.push(
+      Promise.race([
+        sendAutoReply(contactData),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Auto-reply timeout')), 10000)
+        )
+      ])
+      .then(() => {
+        console.log('Auto-reply sent successfully');
+        autoReplySent = true;
+      })
+      .catch((autoReplyError) => {
+        console.error('Auto-reply failed or timed out:', autoReplyError);
+        console.error('Auto-reply error details:', {
+          message: autoReplyError.message,
+          stack: autoReplyError.stack
+        });
+      })
+    );
+    
+    // Wait for both emails to complete (or fail)
+    await Promise.allSettled(emailPromises);
     
     // Always send success response
     console.log('Sending success response to client');
+    console.log('Email status:', { emailSent, autoReplySent });
     res.status(201).json({ 
       success: true, 
       message: 'Thank you for your message! I will get back to you soon.',
-      emailSent: emailSent
+      emailSent: emailSent,
+      autoReplySent: autoReplySent
     });
   } catch (e) {
     console.error('Contact form error:', e);
